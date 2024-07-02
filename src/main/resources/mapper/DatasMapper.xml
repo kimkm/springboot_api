@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atoz.api.mapper.DatasMapper">
+    <resultMap id="DatasResultMap" type="com.atoz.api.model.Datas">
+        <id property="id" column="id" />
+        <result property="t" column="temp" />
+        <result property="h" column="humi" />
+        <result property="c" column="co" />
+        <result property="i" column="device" />
+        <result property="d" column="rdate" />
+    </resultMap>
+
+    <select id="findAll" resultMap="DatasResultMap">
+        SELECT * FROM datas
+    </select>
+
+    <select id="findById" resultMap="DatasResultMap" parameterType="int">
+        SELECT * FROM datas WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.atoz.api.model.Datas">
+        INSERT INTO datas (device, temp, humi, co, rdate) VALUES (#{i}, #{t}, #{h}, #{c}, #{d})
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM datas WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atoz.api.mapper.AudiosMapper">
+
+    <resultMap id="AudiosResultMap" type="com.atoz.api.model.Audios">
+        <id property="id" column="id" />
+        <result property="i" column="device" />
+        <result property="filename" column="filename" />
+        <result property="d" column="rdate" />
+        <result property="kb" column="kbyte" />
+        <result property="se" column="sec" />
+    </resultMap>
+
+    <select id="findAll" resultMap="AudiosResultMap">
+        SELECT * FROM audios
+    </select>
+
+    <select id="findById" resultMap="AudiosResultMap" parameterType="int">
+        SELECT * FROM audios WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.atoz.api.model.Audios">
+        INSERT INTO audios (device, filename, rdate, kbyte, sec) VALUES (#{i}, #{filename}, #{d}, #{kb}, #{se})
+        <selectKey keyProperty="id" order="AFTER" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM audios WHERE id = #{id}
+    </delete>
+</mapper>
